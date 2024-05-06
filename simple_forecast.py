@@ -21,7 +21,7 @@ def load_data_q(filename, sheetname, skiprows = 0):
     data.rename(columns={'Unnamed: 0': 'quarter'}, inplace=True)
     return data
 
-def analyse_series_q(data, column_name, qonq = True, yony = True):
+def analyse_series(data, column_name, qonq = True, yony = True):
     df = pd.DataFrame(data, columns = ['quarter', column_name])
     if qonq:
         df = df.assign(qonq = df[column_name]/df[column_name].shift(periods=1)-1)
@@ -61,9 +61,7 @@ for i in range(append_rows):
     data = pd.concat([data, df])
     #print(b.tail(n=1)['quarter'])
 
-
-
-b = analyse_series_q(data, 'Series2', True, True)
+b = analyse_series(data, 'Series2', True, True)
 #print(b)
 c = crude_forecast_qonq(b)
 d = crude_forecast_yony(b)
